@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:validacao/pages/telaCadastro.dart';
+import 'telaHome.dart';
 
 class TelaLogin extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -15,19 +16,12 @@ class TelaLogin extends StatelessWidget {
             const CircleAvatar(
               radius: 60,
               backgroundColor: Color.fromARGB(255, 175, 34, 64),
-              child: Icon(
-                Icons.person,
-                size: 70,
-                color: Colors.white,
-              ),
+              child: Icon(Icons.person, size: 70, color: Colors.white),
             ),
             const SizedBox(height: 20),
             const Text(
               'Bem-vindo!',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 30),
             Form(
@@ -39,104 +33,112 @@ class TelaLogin extends StatelessWidget {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(color: Colors.grey),
+                        borderSide: const BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(color: Colors.blue),
+                        borderSide: const BorderSide(color: Colors.blue),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(color: Colors.red, width: 1.5),
+                        borderSide:
+                            const BorderSide(color: Colors.red, width: 1.5),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide:
-                            BorderSide(color: Colors.redAccent, width: 2.0),
+                        borderSide: const BorderSide(
+                            color: Colors.redAccent, width: 2.0),
                       ),
-                      prefixIcon: Padding(
-                          padding: EdgeInsets.all(1),
-                          child: Icon(
-                            Icons.email,
-                            color: Colors.grey,
-                          )),
+                      prefixIcon: const Icon(Icons.email, color: Colors.grey),
                       labelText: 'Email',
                       hintText: 'Insira seu email',
                     ),
                     validator: (valor) {
                       if (valor == null || valor.isEmpty) {
-                        return 'Insira seu email';
+                        return 'Digite seu email';
                       }
-
                       final emailRegex =
                           RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-
                       if (!emailRegex.hasMatch(valor)) {
-                        return 'Insira um email válido';
+                        return 'Digite um email válido';
                       }
-
                       return null;
                     },
                   ),
-                  Padding(padding: EdgeInsets.all(10)),
+                  const SizedBox(height: 16),
                   TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(color: Colors.grey),
+                        borderSide: const BorderSide(color: Colors.grey),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(color: Colors.blue),
+                        borderSide: const BorderSide(color: Colors.blue),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide: BorderSide(color: Colors.red, width: 1.5),
+                        borderSide:
+                            const BorderSide(color: Colors.red, width: 1.5),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
-                        borderSide:
-                            BorderSide(color: Colors.redAccent, width: 2.0),
+                        borderSide: const BorderSide(
+                            color: Colors.redAccent, width: 2.0),
                       ),
-                      prefixIcon: Padding(
-                          padding: EdgeInsets.all(1),
-                          child: Icon(
-                            Icons.lock,
-                            color: Colors.grey,
-                          )),
+                      prefixIcon: const Icon(Icons.lock, color: Colors.grey),
                       labelText: 'Senha',
                       hintText: 'Insira sua senha',
                     ),
                     validator: (senha) {
                       if (senha == null || senha.isEmpty) {
-                        return 'Insira sua senha';
+                        return 'Digite sua senha';
                       }
-
                       return null;
                     },
-                  )
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 175, 34, 64),
-                foregroundColor: Colors.white,   
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 175, 34, 64),
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.all(14)
+                ),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TelaHome()),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text('Login realizado com sucesso!')),
+                    );
+                  }
+                },
+                child: const Text('Entrar'),
               ),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content: Text('“Login realizado com sucesso!”')),
+            const SizedBox(height: 20),
+            Text("Caso não tenha uma conta"),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 175, 34, 64),
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.all(14)
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TelaCadastro()),
                   );
-                }
-              },
-              child: Text('Entrar'),
-            ),
+                },
+                child: const Text('Criar conta'),
+              ),
           ],
         ),
       ),
